@@ -1,0 +1,48 @@
+---
+const categories = [
+  { id: 'bustos', emoji: '🎭', name: 'Bustos y Figuras', desc: 'Héroes y villanos en detalle' },
+  { id: 'anime', emoji: '⚓', name: 'Anime & Manga', desc: 'One Piece y más universos' },
+  { id: 'gaming', emoji: '🎧', name: 'Accesorios Gaming', desc: 'Stands y gadgets geek' },
+  { id: 'decoracion', emoji: '🎄', name: 'Decoración', desc: 'Piezas únicas para tu hogar' },
+  { id: 'custom', emoji: '✨', name: 'Encargos Custom', desc: 'Tu idea, nuestra impresión' },
+];
+---
+
+<section id="categorias" class="py-20 sm:py-28 px-4 sm:px-6" style="background:#0D0D1A;">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-14 reveal">
+      <span class="badge mb-4 inline-block">Explora</span>
+      <h2 class="text-3xl sm:text-4xl font-black mb-4" style="font-family:'Orbitron',sans-serif; color:#F5F5F5;">
+        Nuestras <span class="gradient-text">Categorías</span>
+      </h2>
+      <p class="text-base max-w-xl mx-auto" style="color:#A0A0A0;">
+        Desde figuras de fantasía hasta soportes funcionales — encuentra tu próxima pieza favorita.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+      {categories.map((cat, i) => (
+        <a
+          href={`#cat-${cat.id}`}
+          class={`card-category reveal reveal-delay-${Math.min(i + 1, 4)}`}
+          aria-label={`Ver ${cat.name}`}
+        >
+          <span class="text-4xl sm:text-5xl leading-none" role="img" aria-hidden="true">
+            {cat.emoji}
+          </span>
+          <div class="text-center">
+            <div class="font-bold text-sm sm:text-base leading-tight mb-1" style="font-family:'Orbitron',sans-serif; color:#F5F5F5;">
+              {cat.name}
+            </div>
+            <div class="text-xs" style="color:#A0A0A0;">{cat.desc}</div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>

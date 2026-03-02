@@ -1,0 +1,92 @@
+---
+const steps = [
+  {
+    number: '01',
+    icon: '🎨',
+    title: 'Elige o Diseña',
+    desc: 'Escoge una pieza de nuestro catálogo o cuéntanos tu idea. Personalizamos cualquier diseño.',
+  },
+  {
+    number: '02',
+    icon: '🖨️',
+    title: 'Lo Fabricamos',
+    desc: 'Impresión 3D con acabado artesanal. Usamos materiales de calidad para un resultado premium.',
+  },
+  {
+    number: '03',
+    icon: '📦',
+    title: 'Recíbelo',
+    desc: 'Recogida en Puertollano o envío a toda España. Tu pieza llega perfectamente embalada.',
+  },
+];
+---
+
+<section id="como-funciona" class="py-20 sm:py-28 px-4 sm:px-6" style="background:#111124;">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-16 reveal">
+      <span class="badge mb-4 inline-block">Proceso</span>
+      <h2 class="text-3xl sm:text-4xl font-black mb-4" style="font-family:'Orbitron',sans-serif; color:#F5F5F5;">
+        ¿Cómo <span class="gradient-text">Funciona?</span>
+      </h2>
+      <p class="text-base max-w-xl mx-auto" style="color:#A0A0A0;">
+        De tu idea a tus manos en tres sencillos pasos.
+      </p>
+    </div>
+
+    <!-- Steps -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 items-start relative">
+      {steps.map((step, i) => (
+        <div class={`relative flex flex-col items-center text-center reveal reveal-delay-${i + 1}`}>
+
+          <!-- Step number + icon -->
+          <div class="relative mb-6">
+            <!-- Outer ring -->
+            <div
+              class="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center text-3xl sm:text-4xl"
+              style="background:linear-gradient(135deg,rgba(212,160,23,0.12),rgba(0,139,139,0.12)); border:2px solid rgba(212,160,23,0.3);"
+              role="img"
+              aria-label={step.title}
+            >
+              {step.icon}
+            </div>
+            <!-- Number badge -->
+            <span
+              class="absolute -top-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center text-xs font-black"
+              style="background:#D4A017; color:#0D0D1A; font-family:'Orbitron',sans-serif;"
+              aria-hidden="true"
+            >
+              {step.number}
+            </span>
+          </div>
+
+          <h3 class="text-lg sm:text-xl font-bold mb-3" style="font-family:'Orbitron',sans-serif; color:#F5F5F5;">
+            {step.title}
+          </h3>
+          <p class="text-sm leading-relaxed max-w-xs" style="color:#A0A0A0;">
+            {step.desc}
+          </p>
+
+          <!-- Connector (between steps, hidden on mobile) -->
+          {i < steps.length - 1 && (
+            <div
+              class="hidden md:block absolute top-10 sm:top-12 left-[calc(50%+3rem)] right-[calc(-50%+3rem)]"
+              style="height:2px; background:linear-gradient(90deg,rgba(212,160,23,0.5),rgba(0,139,139,0.5));"
+              aria-hidden="true"
+            ></div>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-14 reveal">
+      <a href="#encargos" class="btn-primary inline-block">
+        Empezar mi Encargo
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
