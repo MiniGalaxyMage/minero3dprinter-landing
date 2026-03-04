@@ -8,18 +8,43 @@ jobs:
   request-review:
     runs-on: ubuntu-latest
     steps:
-      - name: Request review from Gemini Code Assist
+      - name: Dismiss previous Gemini reviews and request fresh review
         uses: actions/github-script@v7
         with:
           script: |
+            const { owner, repo } = context.repo;
+            const pull_number = context.payload.pull_request.number;
+
+            // Step 1: Dismiss previous Gemini reviews (forces re-review)
+            try {
+              const reviews = await github.rest.pulls.listReviews({
+                owner, repo, pull_number
+              });
+              for (const review of reviews.data) {
+                if (review.user?.login === 'gemini-code-assist[bot]' && review.state !== 'DISMISSED') {
+                  try {
+                    await github.rest.pulls.dismissReview({
+                      owner, repo, pull_number,
+                      review_id: review.id,
+                      message: 'New commits pushed — requesting fresh review'
+                    });
+                    console.log(`✅ Dismissed Gemini review ${review.id}`);
+                  } catch (e) {
+                    console.log(`⚠️ Could not dismiss review ${review.id}: ${e.message}`);
+                  }
+                }
+              }
+            } catch (e) {
+              console.log(`⚠️ Could not list reviews: ${e.message}`);
+            }
+
+            // Step 2: Request fresh review from Gemini
             try {
               await github.rest.pulls.requestReviewers({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.payload.pull_request.number,
+                owner, repo, pull_number,
                 reviewers: ['gemini-code-assist[bot]']
               });
               console.log('✅ Gemini review requested');
             } catch (e) {
-              console.log('⚠️ Could not request review:', e.message);
+              console.log(`⚠️ Could not request review: ${e.message}`);
             }
